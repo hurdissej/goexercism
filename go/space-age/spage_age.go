@@ -1,33 +1,22 @@
 package space
 
-import (
-	"math"
-)
+var orbitalPeriodsInEarthYears = map[string]float64{
+	"Earth":   1.0,
+	"Mercury": 0.2408467,
+	"Venus":   0.61519726,
+	"Mars":    1.8808158,
+	"Jupiter": 11.862615,
+	"Saturn":  29.447498,
+	"Uranus":  84.016846,
+	"Neptune": 164.79132,
+}
 
 //Age returns the age on any planet given an age in seconds
 func Age(seconds float64, planet string) float64 {
-	switch planet {
-	case "Earth":
-		return ConvertToEarthYears(seconds)
-	case "Mercury":
-		return 1
-	case "Venus":
-		return 1
-	case "Mars":
-		return 1
-	case "Jupiter":
-		return 1
-	case "Saturn":
-		return 1
-	case "Uranus":
-		return 1
-	case "Neptune":
-		return 1
-	}
-	return -1
+	return convertToEarthYears(seconds) / orbitalPeriodsInEarthYears[planet]
 }
 
-//ConvertToEarthYears turns seconds into years on earth
-func ConvertToEarthYears(seconds float64) float64 {
-	return math.Round(((seconds / (365 * 24 * 60 * 60)) * 10.05) / 10)
+//convertToEarthYears turns seconds into years on earth
+func convertToEarthYears(seconds float64) float64 {
+	return seconds / 31557600.0
 }
